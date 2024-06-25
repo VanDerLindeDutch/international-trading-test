@@ -1,0 +1,51 @@
+definitions:
+  fiber_errors.Error:
+    properties:
+      code:
+        type: integer
+      extra:
+        items:
+          type: string
+        type: array
+      message:
+        type: string
+    type: object
+  service.HashedValue:
+    properties:
+      MD5Value:
+        type: string
+      SHA256Value:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /some-client/{value}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Price alert external ID
+        in: path
+        name: value
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.HashedValue'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/fiber_errors.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/fiber_errors.Error'
+      summary: Get some value
+      tags:
+      - Some Client
+swagger: "2.0"
